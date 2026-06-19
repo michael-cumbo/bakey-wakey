@@ -1,5 +1,5 @@
 {
-  description = "A very basic flake";
+  description = "a basic flake for data analysis";
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -13,13 +13,12 @@
   outputs = inputs @ {
     flake-parts,
     nvf,
-    nixpkgs,
     ...
   }:
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux"];
       perSystem = {pkgs, ...}: {
-        devShells.default = import ./shell.nix {inherit pkgs;};
+        devShells.default = import ./modules/shell.nix {inherit pkgs;};
 
         packages.default =
           (nvf.lib.neovimConfiguration {

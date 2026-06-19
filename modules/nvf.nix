@@ -19,8 +19,8 @@
       vimAlias = true;
       theme = {
         enable = true;
-        name = "catppuccin";
-        style = "macchiato";
+        name = "tokyonight";
+        style = "night";
       };
 
       utility = {icon-picker.enable = true;};
