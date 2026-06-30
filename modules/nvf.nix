@@ -4,7 +4,7 @@
     # most settings are documented in the appendix
     vim = {
       autopairs.nvim-autopairs.enable = true;
-      ui.noice.enable = true;
+      ui.noice.enable = false;
       binds.whichKey.enable = true;
       telescope.enable = true;
       startPlugins = with pkgs;
@@ -32,7 +32,6 @@
         nvim-cursorline.enable = true;
         cinnamon-nvim.enable = true;
         fidget-nvim.enable = true;
-
         highlight-undo.enable = true;
         blink-indent.enable = true;
         indent-blankline.enable = true;
@@ -50,7 +49,6 @@
         enable = true;
         format.enable = true;
         lsp.enable = true;
-        treesitter.enable = true;
       };
 
       languages.lua = {
@@ -64,10 +62,9 @@
       languages.nix = {
         enable = true;
         extraDiagnostics.enable = true;
-        lsp.servers = ["nil" "nixd"];
+        lsp.servers = ["nixd"];
         format.enable = true;
         lsp.enable = true;
-        treesitter.enable = true;
       };
 
       languages.python = {
@@ -75,12 +72,10 @@
         dap.enable = true;
         format.enable = true;
         lsp.enable = true;
-        treesitter.enable = true;
       };
 
       statusline.lualine.enable = true;
       autocomplete = {
-        nvim-cmp.enable = true;
         blink-cmp.enable = true;
       };
 
