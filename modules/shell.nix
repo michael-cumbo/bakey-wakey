@@ -4,6 +4,7 @@ with pkgs;
     buildInputs = [
       tree
       starship
+      sqlfluff
       nixpkgs-fmt
       ncurses
       zellij
