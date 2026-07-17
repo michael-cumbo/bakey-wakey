@@ -12,6 +12,7 @@ with pkgs;
       yazi
       ripgrep
       git
+      lazygit
       fastfetch
       gradle
       fish
