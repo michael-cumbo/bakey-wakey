@@ -119,6 +119,11 @@
         format.enable = true;
       };
 
+      languages.bash = {
+        enable = true;
+        format.enable = true;
+      };
+
       languages.r = {
         enable = true;
         format.enable = true;
