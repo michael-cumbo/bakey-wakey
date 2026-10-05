@@ -37,6 +37,7 @@
       telescope.enable = true;
       startPlugins = with pkgs.vimPlugins; [
         rnvim.packages.${pkgs.stdenv.hostPlatform.system}.default
+        snacks-nvim
         vim-pencil
         dataform-nvim
         twilight-nvim
