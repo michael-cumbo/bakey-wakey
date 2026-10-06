@@ -31,6 +31,20 @@
         };
       dataform-nvim = pkgs.callPackage dataform-nvim-pkg {};
     in {
+      keymaps = [
+        {
+          key = "gT";
+          mode = ["n"];
+          action = "<Cmd>BufferNext<CR>";
+          desc = "Next Buffer";
+        }
+        {
+          key = "gt";
+          mode = ["n"];
+          action = "<Cmd>BufferPrevious<CR>";
+          desc = "Previous Buffer";
+        }
+      ];
       autopairs.nvim-autopairs.enable = true;
       ui.noice.enable = false;
       binds.whichKey.enable = true;
