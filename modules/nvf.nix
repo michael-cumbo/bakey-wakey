@@ -2,160 +2,164 @@
   pkgs,
   rnvim,
   ...
-}: {
+}:
+{
   config = {
     # Your settings need to go into the settings attribute set
     # most settings are documented in the appendix
-    vim = let
-      dataform-nvim-pkg = {
-        vimUtils,
-        fetchFromGitHub,
-      }:
-        vimUtils.buildVimPlugin {
-          pname = "dataform-nvim";
-          version = "0-unstable-2025-06-16";
+    vim =
+      let
+        dataform-nvim-pkg =
+          {
+            vimUtils,
+            fetchFromGitHub,
+          }:
+          vimUtils.buildVimPlugin {
+            pname = "dataform-nvim";
+            version = "0-unstable-2025-06-16";
 
-          src = fetchFromGitHub {
-            owner = "magal1337";
-            repo = "dataform.nvim";
-            rev = "43a5f9e17275325ae32e5248c6f21636418e2018";
-            hash = "sha256-HA6E9L6U37Btb/dDgtm7du97/fae5IawCSg/nmB/tqg=";
-          };
+            src = fetchFromGitHub {
+              owner = "magal1337";
+              repo = "dataform.nvim";
+              rev = "43a5f9e17275325ae32e5248c6f21636418e2018";
+              hash = "sha256-HA6E9L6U37Btb/dDgtm7du97/fae5IawCSg/nmB/tqg=";
+            };
 
-          meta = {
-            description = "Dataform Core Plugin for Neovim";
-            homepage = "https://github.com/magal1337/dataform.nvim";
-            license = pkgs.lib.licenses.mit;
-            #maintainers = with pkgs.lib.maintainers; [];
+            meta = {
+              description = "Dataform Core Plugin for Neovim";
+              homepage = "https://github.com/magal1337/dataform.nvim";
+              license = pkgs.lib.licenses.mit;
+              #maintainers = with pkgs.lib.maintainers; [];
+            };
           };
+        dataform-nvim = pkgs.callPackage dataform-nvim-pkg { };
+      in
+      {
+        keymaps = [
+          {
+            key = "gT";
+            mode = [ "n" ];
+            action = "<Cmd>BufferNext<CR>";
+            desc = "Next Buffer";
+          }
+          {
+            key = "gt";
+            mode = [ "n" ];
+            action = "<Cmd>BufferPrevious<CR>";
+            desc = "Previous Buffer";
+          }
+        ];
+        autopairs.nvim-autopairs.enable = true;
+        ui.noice.enable = false;
+        binds.whichKey.enable = true;
+        telescope.enable = true;
+        startPlugins = with pkgs.vimPlugins; [
+          rnvim.packages.${pkgs.stdenv.hostPlatform.system}.default
+          snacks-nvim
+          vim-pencil
+          dataform-nvim
+          twilight-nvim
+          barbar-nvim
+          zen-mode-nvim
+          render-markdown-nvim
+        ];
+
+        viAlias = false;
+        vimAlias = true;
+        theme = {
+          enable = true;
+          name = "tokyonight";
+          style = "night";
         };
-      dataform-nvim = pkgs.callPackage dataform-nvim-pkg {};
-    in {
-      keymaps = [
-        {
-          key = "gT";
-          mode = ["n"];
-          action = "<Cmd>BufferNext<CR>";
-          desc = "Next Buffer";
-        }
-        {
-          key = "gt";
-          mode = ["n"];
-          action = "<Cmd>BufferPrevious<CR>";
-          desc = "Previous Buffer";
-        }
-      ];
-      autopairs.nvim-autopairs.enable = true;
-      ui.noice.enable = false;
-      binds.whichKey.enable = true;
-      telescope.enable = true;
-      startPlugins = with pkgs.vimPlugins; [
-        rnvim.packages.${pkgs.stdenv.hostPlatform.system}.default
-        snacks-nvim
-        vim-pencil
-        dataform-nvim
-        twilight-nvim
-        barbar-nvim
-        zen-mode-nvim
-        render-markdown-nvim
-      ];
+        treesitter = {
+          enable = true;
+          highlight.enable = true;
+        };
+        clipboard = {
+          enable = true;
+          providers.wl-copy.enable = true;
+          registers = "unnamedplus";
+        };
 
-      viAlias = false;
-      vimAlias = true;
-      theme = {
-        enable = true;
-        name = "tokyonight";
-        style = "night";
-      };
-      treesitter = {
-        context.enable = true;
-        enable = true;
-        highlight.enable = true;
-      };
-      clipboard = {
-        enable = true;
-        providers.wl-copy.enable = true;
-        registers = "unnamedplus";
-      };
+        utility = {
+          icon-picker.enable = true;
+          yazi-nvim.enable = true;
+        };
 
-      utility = {
-        icon-picker.enable = true;
-        yazi-nvim.enable = true;
-      };
+        visuals = {
+          nvim-scrollbar.enable = true;
+          nvim-web-devicons.enable = true;
+          nvim-cursorline.enable = true;
+          cinnamon-nvim.enable = true;
+          fidget-nvim.enable = true;
+          highlight-undo.enable = true;
+          blink-indent.enable = true;
+          indent-blankline.enable = true;
 
-      visuals = {
-        nvim-scrollbar.enable = true;
-        nvim-web-devicons.enable = true;
-        nvim-cursorline.enable = true;
-        cinnamon-nvim.enable = true;
-        fidget-nvim.enable = true;
-        highlight-undo.enable = true;
-        blink-indent.enable = true;
-        indent-blankline.enable = true;
+          # Fun
+          cellular-automaton.enable = false;
+        };
 
-        # Fun
-        cellular-automaton.enable = false;
-      };
+        languages = {
+          enableTreesitter = true;
+          yaml.enable = true;
+        };
 
-      languages = {
-        enableTreesitter = true;
-        yaml.enable = true;
-      };
+        languages.sql = {
+          enable = true;
+          format.enable = true;
+        };
 
-      languages.sql = {
-        enable = true;
-        format.enable = true;
-      };
+        languages.lua = {
+          enable = true;
+          extraDiagnostics.enable = true;
+          extraDiagnostics.types = [ "luacheck" ];
+          format.enable = true;
+        };
 
-      languages.lua = {
-        enable = true;
-        extraDiagnostics.enable = true;
-        extraDiagnostics.types = ["luacheck"];
-        format.enable = true;
-      };
+        languages.nix = {
+          enable = true;
+          extraDiagnostics.enable = true;
+          lsp.servers = [ "nixd" ];
+          format.type = [ "nixfmt" ];
+          format.enable = true;
+        };
 
-      languages.nix = {
-        enable = true;
-        extraDiagnostics.enable = true;
-        lsp.servers = ["nixd"];
-        format.enable = true;
-      };
+        languages.yaml = {
+          treesitter.enable = true;
+        };
 
-      languages.yaml = {
-        treesitter.enable = true;
-      };
+        languages.bash = {
+          treesitter.enable = true;
+        };
+        languages.python = {
+          enable = true;
+          dap.enable = true;
+          format.enable = true;
+        };
 
-      languages.bash = {
-        treesitter.enable = true;
-      };
-      languages.python = {
-        enable = true;
-        dap.enable = true;
-        format.enable = true;
-      };
+        languages.bash = {
+          enable = true;
+          format.enable = true;
+        };
 
-      languages.bash = {
-        enable = true;
-        format.enable = true;
-      };
+        languages.r = {
+          enable = true;
+          format.enable = true;
+          treesitter.enable = true;
+        };
 
-      languages.r = {
-        enable = true;
-        format.enable = true;
-        treesitter.enable = true;
-      };
+        statusline.lualine.enable = true;
+        autocomplete = {
+          blink-cmp.enable = true;
+        };
 
-      statusline.lualine.enable = true;
-      autocomplete = {
-        blink-cmp.enable = true;
+        lsp = {
+          enable = true;
+          formatOnSave = true;
+          lightbulb.enable = true;
+          trouble.enable = true;
+        };
       };
-
-      lsp = {
-        enable = true;
-        formatOnSave = true;
-        lightbulb.enable = true;
-        trouble.enable = true;
-      };
-    };
   };
 }
