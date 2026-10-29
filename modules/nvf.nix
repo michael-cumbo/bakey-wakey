@@ -93,8 +93,17 @@
           cinnamon-nvim.enable = true;
           fidget-nvim.enable = true;
           highlight-undo.enable = true;
-          blink-indent.enable = true;
-          indent-blankline.enable = true;
+          blink-indent = {
+            enable = true;
+            setupOpts = {
+              static.char = "┆";
+              scope = {
+                indent_at_cursor = true;
+                char = "┃";
+                highlights = [ ];
+              };
+            };
+          };
 
           # Fun
           cellular-automaton.enable = false;
@@ -107,7 +116,7 @@
 
         languages.sql = {
           enable = true;
-          format.enable = true;
+          format.enable = false;
         };
 
         languages.lua = {
